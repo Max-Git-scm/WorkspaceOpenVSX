@@ -1,0 +1,56 @@
+schemaVersion: 2.2.0
+metadata:
+  name: java-ai-workspace
+
+components:
+  - name: tools
+    container:
+      image: registry.access.redhat.com/ubi9/openjdk-17:latest
+      memoryLimit: 3Gi
+      mountSources: true
+      env:
+        - name: MAVEN_OPTS
+          value: "-Xmx2G"
+
+  - name: che-editor
+    editor:
+      id: che-incubator/che-code/insiders
+      plugins:
+        # Java Extensions
+        - id: redhat.java
+        - id: vscjava.vscode-java-debug
+        - id: vscjava.vscode-java-test
+        - id: vscjava.vscode-java-dependency
+        - id: vscjava.vscode-maven
+
+        # IA Extensions (alternativas ao Copilot)
+        - id: VisualStudioExptTeam.vscodeintellicode
+        - id: Codium.codium
+        - id: TabNine.tabnine-vscode
+        - id: AWS.amazon-q-vscode
+
+        # Produtividade
+        - id: oderwat.indent-rainbow
+        - id: mhutchie.git-graph
+        - id: streetsidesoftware.code-spell-checker
+        - id: shardulm94.trailing-spaces
+        - id: formulahendry.code-runner
+
+commands:
+  - id: build
+    exec:
+      component: tools
+      commandLine: "mvn clean install"
+      workingDir: /projects
+      group:
+        kind: build
+        isDefault: true
+
+  - id: run
+    exec:
+      component: tools
+      commandLine: "mvn spring-boot:run"
+      workingDir: /projects
+      group:
+        kind: run
+        isDefault: true
