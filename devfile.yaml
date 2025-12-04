@@ -12,29 +12,64 @@ components:
         - name: MAVEN_OPTS
           value: "-Xmx2G"
 
-  - name: che-editor
-    editor:
-      id: che-incubator/che-code/insiders
-      plugins:
-        # Java Extensions
-        - id: redhat.java
-        - id: vscjava.vscode-java-debug
-        - id: vscjava.vscode-java-test
-        - id: vscjava.vscode-java-dependency
-        - id: vscjava.vscode-maven
+  # Plugins/Extensões
+  - name: java
+    chePlugin:
+      id: redhat/java/latest
 
-        # IA Extensions (alternativas ao Copilot)
-        - id: VisualStudioExptTeam.vscodeintellicode
-        - id: Codium.codium
-        - id: TabNine.tabnine-vscode
-        - id: AWS.amazon-q-vscode
+  - name: java-debug
+    chePlugin:
+      id: vscjava/vscode-java-debug/latest
 
-        # Produtividade
-        - id: oderwat.indent-rainbow
-        - id: mhutchie.git-graph
-        - id: streetsidesoftware.code-spell-checker
-        - id: shardulm94.trailing-spaces
-        - id: formulahendry.code-runner
+  - name: java-test
+    chePlugin:
+      id: vscjava/vscode-java-test/latest
+
+  - name: java-dependency
+    chePlugin:
+      id: vscjava/vscode-java-dependency/latest
+
+  - name: maven
+    chePlugin:
+      id: vscjava/vscode-maven/latest
+
+  # IA Plugins
+  - name: intellicode
+    chePlugin:
+      id: VisualStudioExptTeam/vscodeintellicode/latest
+
+  - name: codium
+    chePlugin:
+      id: Codeium/codeium/latest
+
+  - name: tabnine
+    chePlugin:
+      id: TabNine/tabnine-vscode/latest
+
+  - name: awsq
+    chePlugin:
+      id: AWS/amazon-q-vscode/latest
+
+  # Produtividade
+  - name: indent-rainbow
+    chePlugin:
+      id: oderwat/indent-rainbow/latest
+
+  - name: git-graph
+    chePlugin:
+      id: mhutchie/git-graph/latest
+
+  - name: code-spell-checker
+    chePlugin:
+      id: streetsidesoftware/code-spell-checker/latest
+
+  - name: trailing-spaces
+    chePlugin:
+      id: shardulm94/trailing-spaces/latest
+
+  - name: code-runner
+    chePlugin:
+      id: formulahendry/code-runner/latest
 
 commands:
   - id: build
