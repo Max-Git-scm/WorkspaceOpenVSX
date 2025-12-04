@@ -1,0 +1,62 @@
+schemaVersion: 2.2.0
+metadata:
+  name: devspaces-java-ai-workspace
+  version: 1.0.0
+  description: Workspace Java com extensões corporativas e IA para OpenShift Dev Spaces.
+
+components:
+
+  # ------------------------------------------------------------------------------
+  # Contêiner principal com o editor Code-OSS (VS Code Open Source)
+  # ------------------------------------------------------------------------------
+  - name: tools
+    container:
+      image: quay.io/devspaces/ubi9-devspaces-code:latest
+      memoryLimit: 2Gi
+      mountSources: true
+      env:
+        - name: JAVA_HOME
+          value: "/usr/lib/jvm/java-17"
+        - name: MAVEN_OPTS
+          value: "-Xmx1024m"
+
+  # ------------------------------------------------------------------------------
+  # Extensões VS Code (OpenVSX) instaladas automaticamente
+  # ------------------------------------------------------------------------------
+  - name: vscode-extensions
+    container:
+      image: quay.io/devspaces/ubi9-devspaces-code:latest
+    vscodeExtensions:
+
+      # ============================================================
+      # 1. EXTENSÕES JAVA OBRIGATÓRIAS
+      # ============================================================
+      - open-vsx:redhat.java
+      - open-vsx:vscjava.vscode-java-debug
+      - open-vsx:vscjava.vscode-java-test
+      - open-vsx:vscjava.vscode-maven
+      - open-vsx:vscjava.vscode-java-dependency
+
+      # ============================================================
+      # 2. EXTENSÕES DE PRODUTIVIDADE
+      # ============================================================
+      - open-vsx:eamodio.gitlens               # GitLens — auditoria de código
+      - open-vsx:gabrielbb.vscode-lombok       # Suporte Lombok
+      - open-vsx:redhat.vscode-xml             # XML — necessário p/ pom.xml, persistence.xml
+      - open-vsx:redhat.vscode-yaml            # YAML — configs Spring, K8s, OpenShift
+      - open-vsx:shengchen.vscode-checkstyle   # Checkstyle — padrão corporativo
+      - open-vsx:editorconfig.editorconfig     # EditorConfig — consistência de estilo
+      - open-vsx:christian-kohler.path-intellisense  # Autocomplete de paths
+      - open-vsx:humao.rest-client             # Testar APIs REST no editor
+      - open-vsx:streetsidesoftware.code-spell-checker # Spell checker
+
+      # ============================================================
+      # 3. EXTENSÕES DE IA (ALTERNATIVAS AO GITHUB COPILOT)
+      # ============================================================
+      - open-vsx:codeium.codeium               # Autocomplete IA
+      - open-vsx:continuedev.continue          # Chat + modelos externos
+      - open-vsx:tabnine.tabnine-vscode        # IA para completions
+
+commands: []
+
+projects: []
